@@ -19,6 +19,7 @@ UPDATE_IN_MS = 30;
 const FrameScreen = () => {
   const frameKeys = Object.keys(frames).sort();
   const middleIndex = Math.floor(frameKeys.length / 2);
+
   const [data, setData] = useState({ x: 0, y: 0, z: 0 });
   const [currentFrame, setCurrentFrame] = useState(
     frames[frameKeys[middleIndex]]
