@@ -2,9 +2,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import { Ionicons } from 'react-native-vector-icons'; // Import Ionicons or any other icon set you prefer
 
-import FrameScreen from '../pages/FrameScreen';
-import HomeScreen from '../pages/HomeScreen';
-import SettingsScreen from '../pages/SettingsScreen';
+import FrameScreen from '../pages/FrameScreen/FrameScreen';
+// import HomeScreen from '../pages/ShopScreen/HomeScreen';
+import ShopScreen from '../pages/ShopScreen/ShopScreen';
+import SettingsScreen from '../pages/SettingsScreen/SettingsScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,7 +29,7 @@ export default function BottomTabNavigator() {
         },
       })}
     >
-      <Tab.Screen name='Shop' component={HomeScreen} />
+      <Tab.Screen name='Shop' component={ShopScreen} />
       <Tab.Screen name='Vizilu' component={FrameScreen} />
       <Tab.Screen name='Settings' component={SettingsScreen} />
     </Tab.Navigator>

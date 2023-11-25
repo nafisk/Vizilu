@@ -5,10 +5,10 @@ import { throttle } from 'lodash';
 import React, { memo, useEffect, useState } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
-import Frame1080p from '../assets/Frame1080p';
-import Frame480p from '../assets/Frame480p';
-import Frame720p from '../assets/Frame720p';
-import styles from './styles/FrameScreenStyles';
+import Frame1080p from '../../assets/Frame1080p';
+import Frame480p from '../../assets/Frame480p';
+import Frame720p from '../../assets/Frame720p';
+import styles from './FrameScreenStyles';
 
 const UPDATE_IN_MS = 10;
 const THROTTLE_INTERVAL = 5;
