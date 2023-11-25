@@ -4,63 +4,61 @@ import { Accelerometer } from 'expo-sensors';
 import { throttle } from 'lodash';
 import React, { memo, useEffect, useState } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
+import RNPickerSelect from 'react-native-picker-select';
+import Frame1080p from '../assets/Frame1080p';
 import Frame480p from '../assets/Frame480p';
 import Frame720p from '../assets/Frame720p';
-import Frame1080p from '../assets/Frame1080p';
-import styles from './FrameScreenStyles'; // Import styles for the component
+import styles from './styles/FrameScreenStyles';
 
-const UPDATE_IN_MS = 10; // Time interval for accelerometer updates
-const THROTTLE_INTERVAL = 5; // Interval to limit how often frame updates can occur
+const UPDATE_IN_MS = 10;
+const THROTTLE_INTERVAL = 5;
 
-// FrameScreen component displays images based on device orientation
 const FrameScreen = memo(() => {
-  // Extract and sort keys from Frame480p object
-  const frameKeys = Object.keys(Frame480p).sort(
-    (a, b) => parseInt(a) - parseInt(b)
-  );
-  const middleIndex = Math.floor(frameKeys.length / 2);
-
-  // State for the current frame and screen orientation
-  const [currentFrame, setCurrentFrame] = useState(
-    Frame480p[frameKeys[middleIndex]]
-  );
+  const [selectedResolution, setSelectedResolution] = useState('480p');
+  const [currentFrame, setCurrentFrame] = useState(null);
   const [orientation, setOrientation] = useState(
     ScreenOrientation.Orientation.PORTRAIT_UP
   );
   const isPortrait = orientation === ScreenOrientation.Orientation.PORTRAIT_UP;
 
   useEffect(() => {
-    // Setting the update interval for the accelerometer
     Accelerometer.setUpdateInterval(UPDATE_IN_MS);
 
-    // Throttle frame updates to improve performance
     const throttledSetFrame = throttle(data => {
-      const frameIndex = mapTiltToFrameIndex(isPortrait ? data.x : data.y);
-      setCurrentFrame(Frame480p[frameKeys[frameIndex]]);
+      const frameSet =
+        selectedResolution === '720p'
+          ? Frame720p
+          : selectedResolution === '1080p'
+          ? Frame1080p
+          : Frame480p;
+      const frameKeys = Object.keys(frameSet).sort(
+        (a, b) => parseInt(a) - parseInt(b)
+      );
+      const frameIndex = mapTiltToFrameIndex(
+        isPortrait ? data.x : data.y,
+        frameKeys.length
+      );
+      setCurrentFrame(frameSet[frameKeys[frameIndex]]);
     }, THROTTLE_INTERVAL);
 
-    // Add accelerometer listener
     const subscription = Accelerometer.addListener(throttledSetFrame);
 
-    // Cleanup on unmount
     return () => {
       subscription.remove();
       throttledSetFrame.cancel();
     };
-  }, [orientation]);
+  }, [orientation, selectedResolution]);
 
-  // Maps device tilt to the appropriate frame index
-  const mapTiltToFrameIndex = tilt => {
+  const mapTiltToFrameIndex = (tilt, length) => {
     const sensitivity = 2;
     const maxTilt = 1;
     const tiltRatio = (tilt * sensitivity + maxTilt) / (2 * maxTilt);
     return Math.min(
-      Math.max(Math.round((frameKeys.length - 1) * tiltRatio), 0),
-      frameKeys.length - 1
+      Math.max(Math.round((length - 1) * tiltRatio), 0),
+      length - 1
     );
   };
 
-  // Toggle screen orientation between portrait and landscape
   const toggleOrientation = async () => {
     const currentOrientation = await ScreenOrientation.getOrientationAsync();
     if (currentOrientation === ScreenOrientation.Orientation.PORTRAIT_UP) {
@@ -77,7 +75,6 @@ const FrameScreen = memo(() => {
   };
 
   return (
-    // Render the current frame and controls for orientation
     <View style={styles.container}>
       <Image
         source={currentFrame}
@@ -92,10 +89,17 @@ const FrameScreen = memo(() => {
           >
             <Text style={styles.orientationButtonText}>Toggle Orientation</Text>
           </TouchableOpacity>
-          <View style={styles.sensorDataContainer}>
-            <Text style={styles.sensorDataText}>
-              Tilt the device to view different frames
-            </Text>
+          <View style={styles.pickerContainer}>
+            <RNPickerSelect
+              onValueChange={value => setSelectedResolution(value)}
+              items={[
+                { label: '480p', value: '480p' },
+                { label: '720p', value: '720p' },
+                { label: '1080p', value: '1080p' },
+              ]}
+              style={styles.pickerSelectStyles}
+              value={selectedResolution}
+            />
           </View>
         </>
       ) : (
