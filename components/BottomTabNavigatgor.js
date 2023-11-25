@@ -15,8 +15,8 @@ export default function BottomTabNavigator() {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === 'Home') {
-            iconName = focused ? 'ios-home' : 'ios-home-outline';
+          if (route.name === 'Shop') {
+            iconName = focused ? 'ios-cart' : 'ios-cart-outline'; // Changed to cart icon
           } else if (route.name === 'Vizilu') {
             iconName = focused ? 'ios-images' : 'ios-images-outline';
           } else if (route.name === 'Settings') {
@@ -28,7 +28,7 @@ export default function BottomTabNavigator() {
         },
       })}
     >
-      <Tab.Screen name='Home' component={HomeScreen} />
+      <Tab.Screen name='Shop' component={HomeScreen} />
       <Tab.Screen name='Vizilu' component={FrameScreen} />
       <Tab.Screen name='Settings' component={SettingsScreen} />
     </Tab.Navigator>
