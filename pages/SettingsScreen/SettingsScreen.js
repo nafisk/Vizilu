@@ -1,9 +1,38 @@
 import React from 'react';
-import { StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
+import {
+  StyleSheet,
+  Switch,
+  Text,
+  TouchableOpacity,
+  View,
+  Alert,
+} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Assuming you're using AsyncStorage
+import { CommonActions } from '@react-navigation/native'; // Import CommonActions for navigation reset
 
-const SettingsScreen = () => {
+const SettingsScreen = ({ navigation }) => {
   const [isEnabled, setIsEnabled] = React.useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+  const handleLogout = async () => {
+    try {
+      // Clear user data from AsyncStorage or any other storage you are using
+      await AsyncStorage.clear(); // Replace with your logout logic
+
+      // Reset the navigation stack and navigate to the login screen
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: 'LoginPage' }], // Replace 'LoginPage' with the name of your login screen
+        })
+      );
+    } catch (error) {
+      Alert.alert(
+        'Logout Failed',
+        'An error occurred while trying to log out.'
+      );
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -38,7 +67,7 @@ const SettingsScreen = () => {
       </View>
 
       {/* Logout */}
-      <TouchableOpacity style={styles.logoutButton}>
+      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
         <Text style={styles.logoutButtonText}>Logout</Text>
       </TouchableOpacity>
     </View>
