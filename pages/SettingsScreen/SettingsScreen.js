@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Switch,
@@ -7,31 +7,59 @@ import {
   View,
   Alert,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Assuming you're using AsyncStorage
-import { CommonActions } from '@react-navigation/native'; // Import CommonActions for navigation reset
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { CommonActions } from '@react-navigation/native';
+import { CognitoUserPool } from 'amazon-cognito-identity-js'; // Import CognitoUserPool
+
+import userPoolConfig from '../../cognitoConfig'; // Assuming this is your Cognito config
+const userPool = new CognitoUserPool(userPoolConfig);
 
 const SettingsScreen = ({ navigation }) => {
-  const [isEnabled, setIsEnabled] = React.useState(false);
+  const [isEnabled, setIsEnabled] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    checkUserAuthentication();
+  }, []);
+
+  const checkUserAuthentication = () => {
+    const currentUser = userPool.getCurrentUser();
+    if (currentUser) {
+      currentUser.getSession((err, session) => {
+        if (err || !session.isValid()) {
+          setIsLoggedIn(false);
+        } else {
+          setIsLoggedIn(true);
+        }
+      });
+    } else {
+      setIsLoggedIn(false);
+    }
+  };
+
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   const handleLogout = async () => {
-    try {
-      // Clear user data from AsyncStorage or any other storage you are using
-      await AsyncStorage.clear(); // Replace with your logout logic
-
-      // Reset the navigation stack and navigate to the login screen
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ name: 'LoginPage' }], // Replace 'LoginPage' with the name of your login screen
-        })
-      );
-    } catch (error) {
-      Alert.alert(
-        'Logout Failed',
-        'An error occurred while trying to log out.'
-      );
+    const currentUser = userPool.getCurrentUser();
+    if (currentUser) {
+      currentUser.signOut();
     }
+    await AsyncStorage.clear();
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: 'LoginPage' }],
+      })
+    );
+  };
+
+  const handleLogin = () => {
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: 'LoginPage' }],
+      })
+    );
   };
 
   return (
@@ -66,10 +94,16 @@ const SettingsScreen = ({ navigation }) => {
         {/* Display app version or other info */}
       </View>
 
-      {/* Logout */}
-      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-        <Text style={styles.logoutButtonText}>Logout</Text>
-      </TouchableOpacity>
+      {/* Conditional Rendering for Login/Logout */}
+      {isLoggedIn ? (
+        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+          <Text style={styles.logoutButtonText}>Logout</Text>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+          <Text style={styles.loginButtonText}>Log In</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -97,6 +131,18 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 5,
     alignItems: 'center',
+  },
+  loginButton: {
+    marginTop: 20,
+    backgroundColor: 'green',
+    padding: 15,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  loginButtonText: {
+    color: '#ffffff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   logoutButtonText: {
     color: '#ffffff',
