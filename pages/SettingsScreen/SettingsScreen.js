@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logo: {
-    width: 40, // Adjust the size as needed
+    width: 30, // Adjust the size as needed
     marginRight: 10,
   },
   headerTitle: {

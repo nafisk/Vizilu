@@ -1,13 +1,12 @@
 import { Dimensions, StyleSheet } from 'react-native';
 
-const { height, width } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
+    padding: 10,
+    backgroundColor: '#ffffff',
   },
   frameImage: {
     width: '100%',
@@ -16,71 +15,38 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   frameImageLandscape: {
-    width: '100%',
-    height: '100%',
+    width: '90%',
+    height: '90%',
+    // center
+    marginLeft: '5%',
+
     resizeMode: 'contain',
-  },
-  returnButton: {
-    position: 'absolute',
-    top: 20,
-    left: 20,
-    backgroundColor: 'rgba(0,0,0,0.7)',
-    padding: 10,
-    borderRadius: 5,
-    zIndex: 10,
   },
   text: {
     fontSize: 18,
-    marginBottom: 10,
-  },
-  sensorDataContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
-    marginBottom: 20,
-  },
-  sensorDataText: {
-    fontSize: 16,
-    color: 'gray',
+    // center the text
+    textAlign: 'center',
   },
   orientationButton: {
-    backgroundColor: 'rgba(0,0,0,0.7)',
-    padding: 10,
+    backgroundColor: '#007bff',
+    padding: 15,
     borderRadius: 5,
-    zIndex: 10,
-    marginBottom: 20,
+    marginTop: 20,
+    alignItems: 'center',
   },
   orientationButtonText: {
-    color: '#fff',
-    fontSize: 16,
-  },
-  inputIOS: {
-    fontSize: 16,
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 4,
-    color: 'black',
-    paddingRight: 30, // to ensure the text is never behind the icon
-  },
-  inputAndroid: {
-    fontSize: 16,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    borderWidth: 0.5,
-    borderColor: 'purple',
-    borderRadius: 8,
-    color: 'black',
-    paddingRight: 30, // to ensure the text is never behind the icon
+    color: '#ffffff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   pickerContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 10,
-    backgroundColor: 'rgba(0,0,0,0.7)', // Same color as other buttons
-    borderRadius: 5,
-    marginBottom: 20,
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    // padding: 10,
+    paddingVertical: 10,
+    // backgroundColor: 'rgba(0,0,0,0.7)',
+    // borderRadius: ,
+    // marginBottom: 20,
   },
   pickerSelectStyles: {
     inputIOS: {
@@ -91,7 +57,7 @@ const styles = StyleSheet.create({
       borderColor: 'gray',
       borderRadius: 4,
       color: 'black',
-      paddingRight: 30, // to ensure the text is never behind the icon
+      // paddingRight: 30,
     },
     inputAndroid: {
       fontSize: 16,
@@ -101,7 +67,7 @@ const styles = StyleSheet.create({
       borderColor: 'purple',
       borderRadius: 8,
       color: 'black',
-      paddingRight: 30, // to ensure the text is never behind the icon
+      paddingRight: 30,
     },
   },
   headerContainer: {
@@ -109,11 +75,39 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logo: {
-    width: 40, // Adjust the size as needed
+    width: 30,
     marginRight: 10,
   },
   headerTitle: {
     fontSize: 18,
+  },
+  resolutionText: {
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginVertical: 10,
+  },
+  landscapeContainer: {
+    flex: 1,
+    flexDirection: 'row', // Change to row for horizontal layout
+    alignItems: 'center',
+    backgroundColor: '#fff', // or any other background color
+  },
+  backToPortraitButton: {
+    backgroundColor: '#007bff', // Example color
+    padding: 15,
+    borderRadius: 5,
+    alignItems: 'center',
+    // Position the button on the left side
+    position: 'absolute',
+    left: 10, // Adjust as needed for spacing from the left edge
+    top: '50%', // Center vertically in the container
+    transform: [{ translateY: -75 }], // Adjust based on the height of the button for vertical centering
+  },
+  backToPortraitButtonText: {
+    color: '#ffffff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 

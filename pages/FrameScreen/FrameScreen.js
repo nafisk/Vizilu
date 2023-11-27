@@ -11,8 +11,8 @@ import Frame720p from '../../assets/Frame720p';
 import styles from './FrameScreenStyles';
 import logo from '../../assets/app/logo.webp';
 
-const UPDATE_IN_MS = 10;
-const THROTTLE_INTERVAL = 5;
+const UPDATE_IN_MS = 100;
+const THROTTLE_INTERVAL = 50;
 
 const FrameScreen = memo(({ navigation }) => {
   const [selectedResolution, setSelectedResolution] = useState('480p');
@@ -88,6 +88,9 @@ const FrameScreen = memo(({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.resolutionText}>
+        Resolution: {selectedResolution}
+      </Text>
       <Image
         source={currentFrame}
         style={isPortrait ? styles.frameImage : styles.frameImageLandscape}
@@ -102,6 +105,7 @@ const FrameScreen = memo(({ navigation }) => {
             <Text style={styles.orientationButtonText}>Toggle Orientation</Text>
           </TouchableOpacity>
           <View style={styles.pickerContainer}>
+            <Text style={styles.pickerLabel}>Resolution</Text>
             <RNPickerSelect
               onValueChange={value => setSelectedResolution(value)}
               items={[
@@ -115,12 +119,16 @@ const FrameScreen = memo(({ navigation }) => {
           </View>
         </>
       ) : (
-        <TouchableOpacity
-          onPress={toggleOrientation}
-          style={styles.returnButton}
-        >
-          <Ionicons name='md-return-up-back' size={30} color='white' />
-        </TouchableOpacity>
+        <View style={styles.landscapeContainer}>
+          <TouchableOpacity
+            onPress={toggleOrientation}
+            style={styles.backToPortraitButton}
+          >
+            <Text style={styles.backToPortraitButtonText}>
+              Back to Portrait
+            </Text>
+          </TouchableOpacity>
+        </View>
       )}
     </View>
   );

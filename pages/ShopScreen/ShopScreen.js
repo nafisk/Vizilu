@@ -59,8 +59,8 @@ const ShopScreen = ({ navigation }) => {
       console.log('Payment Sheet Params:', clientSecret); // Log the client secret
       return clientSecret;
     } catch (error) {
-      console.error('Error fetching payment sheet params:', error);
-      Alert.alert('Error', 'Failed to fetch payment sheet parameters');
+      console.log('Error fetching payment sheet params:', error);
+      // Alert.alert('Error', 'Failed to fetch payment sheet parameters');
     }
   };
 
@@ -83,14 +83,18 @@ const ShopScreen = ({ navigation }) => {
     if (!error) {
       setLoading(false);
     } else {
-      console.error('Error initializing payment sheet:', error);
-      Alert.alert('Error', 'Unable to initialize payment sheet');
+      console.log('Error initializing payment sheet:', error);
+      // Alert.alert('Error', 'Unable to initialize payment sheet');
       setLoading(false);
     }
   };
 
   const handleBuyNow = async () => {
-    console.log('Buy Now clicked');
+    const userInfo = await getCurrentUserInfo();
+    if (!userInfo) {
+      Alert.alert('Login Required', 'Please log in to make a purchase.');
+      return;
+    }
     await initializePaymentSheet();
 
     if (paymentIntentClientSecret) {
@@ -99,14 +103,15 @@ const ShopScreen = ({ navigation }) => {
       });
 
       if (error) {
-        console.error(`Error code: ${error.code}`, error.message);
-        Alert.alert('Payment Failed', error.message);
+        console.log(`Error code: ${error.code}`, error.message);
+        // Alert.alert('Payment Failed', error.message);
       } else {
         console.log('Success');
         Alert.alert('Payment Successful', 'Your payment was successful!');
       }
     } else {
-      Alert.alert('Error', 'Payment Intent Client Secret is not available');
+      // Alert.alert('Error', 'Payment Intent Client Secret is not available');
+      console.log('Payment Intent Client Secret is not available');
     }
   };
 
@@ -135,7 +140,7 @@ const ShopScreen = ({ navigation }) => {
         });
       });
     } else {
-      return Promise.reject('No current user');
+      return Promise.resolve(null);
     }
   };
 
@@ -153,11 +158,13 @@ const ShopScreen = ({ navigation }) => {
             </View>
           ))}
         </ScrollView>
+
+        {/* section 1 */}
         <Text style={styles.title}>{name}</Text>
         <Text style={styles.description}>{description}</Text>
         <Text style={styles.price}>${price}</Text>
-
-        {/* Item Details */}
+        <View style={styles.view} />
+        {/* section 2: Item Details */}
         <View style={styles.itemDetails}>
           <Text style={styles.detailsTitle}>Item Details:</Text>
           <Text style={styles.detailsText}>
@@ -166,17 +173,20 @@ const ShopScreen = ({ navigation }) => {
           </Text>
           <Text style={styles.detailsText}>{itemDetails.description}</Text>
 
+          {/* section 3 */}
           <Text style={styles.detailsTitle}>Key Features:</Text>
           {itemDetails.keyFeatures.map((feature, index) => (
             <Text key={index} style={styles.detailsText}>
               - {feature}
             </Text>
           ))}
+          <View style={styles.view} />
+          {/* section 4 */}
           <Text style={styles.detailsTitle}>Installation:</Text>
           <Text style={styles.detailsText}>{itemDetails.installation}</Text>
 
+          {/* section 5 */}
           <Text style={styles.detailsTitle}>Gift Idea:</Text>
-
           <Text style={styles.detailsText}>{itemDetails.giftIdea}</Text>
         </View>
       </ScrollView>
@@ -192,8 +202,15 @@ const ShopScreen = ({ navigation }) => {
     </SafeAreaView>
   );
 };
-
+// #f6c91a
+// #f88c38
+// #198eca
+// #a1d4e9
 const styles = StyleSheet.create({
+  view: {
+    borderBottomColor: '#a1d4e9',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
   safeArea: {
     flex: 1,
     backgroundColor: '#ffffff',
@@ -266,7 +283,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logo: {
-    width: 40, // Adjust the size as needed
+    width: 30, // Adjust the size as needed
     marginRight: 10,
   },
   headerTitle: {
