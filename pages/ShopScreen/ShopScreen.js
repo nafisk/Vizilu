@@ -1,5 +1,7 @@
-import React from 'react';
+import { useStripe } from '@stripe/stripe-react-native';
+import React, { useState } from 'react';
 import {
+  Alert,
   Dimensions,
   Image,
   ScrollView,
@@ -9,15 +11,83 @@ import {
   View,
 } from 'react-native';
 import mockData from '../../mock/product';
+import { PAYMENT_ENDPOINT } from '../../utils/constants';
 
 const { width } = Dimensions.get('window');
 
 const ShopScreen = () => {
-  const { images, videos, name, description, price } = mockData;
+  const { images, name, description, price } = mockData;
+  const { initPaymentSheet, presentPaymentSheet } = useStripe();
+  const [loading, setLoading] = useState(false);
+  const [paymentIntentClientSecret, setPaymentIntentClientSecret] =
+    useState(null);
 
-  const handleBuyNow = () => {
-    // Handle the buy now action
+  const fetchPaymentSheetParams = async () => {
+    try {
+      const response = await fetch(PAYMENT_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: price * 100, // Assuming price is in dollars, Stripe requires amount in cents
+        }),
+      });
+
+      const { clientSecret } = await response.json();
+      console.log('Payment Sheet Params:', clientSecret); // Log the client secret
+      return clientSecret;
+    } catch (error) {
+      console.error('Error fetching payment sheet params:', error);
+      Alert.alert('Error', 'Failed to fetch payment sheet parameters');
+    }
+  };
+
+  const initializePaymentSheet = async () => {
+    setLoading(true);
+    const clientSecret = await fetchPaymentSheetParams();
+
+    if (!clientSecret) {
+      Alert.alert('Error', 'Payment Intent Client Secret is not available');
+      setLoading(false);
+      return;
+    }
+
+    setPaymentIntentClientSecret(clientSecret);
+
+    const { error } = await initPaymentSheet({
+      paymentIntentClientSecret: clientSecret,
+    });
+
+    if (!error) {
+      setLoading(false);
+    } else {
+      console.error('Error initializing payment sheet:', error);
+      Alert.alert('Error', 'Unable to initialize payment sheet');
+      setLoading(false);
+    }
+  };
+
+  const handleBuyNow = async () => {
     console.log('Buy Now clicked');
+    await initializePaymentSheet();
+
+    if (paymentIntentClientSecret) {
+      const { error } = await presentPaymentSheet({
+        clientSecret: paymentIntentClientSecret,
+      });
+
+      if (error) {
+        console.error(`Error code: ${error.code}`, error.message);
+        Alert.alert('Payment Failed', error.message);
+      } else {
+        console.log('Success');
+        Alert.alert('Payment Successful', 'Your payment was successful!');
+        // Handle successful payment here
+      }
+    } else {
+      Alert.alert('Error', 'Payment Intent Client Secret is not available');
+    }
   };
 
   return (
@@ -38,7 +108,11 @@ const ShopScreen = () => {
       <Text style={styles.price}>${price}</Text>
 
       {/* Buy Now Button */}
-      <TouchableOpacity style={styles.buyButton} onPress={handleBuyNow}>
+      <TouchableOpacity
+        style={styles.buyButton}
+        onPress={handleBuyNow}
+        disabled={loading}
+      >
         <Text style={styles.buyButtonText}>Buy Now</Text>
       </TouchableOpacity>
     </ScrollView>
@@ -73,18 +147,8 @@ const styles = StyleSheet.create({
     width: width,
     height: 200,
   },
-  videoContainer: {
-    width: width - 20,
-    height: 200,
-    marginRight: 10,
-    alignItems: 'center',
-  },
-  video: {
-    width: '100%',
-    height: '100%',
-  },
   buyButton: {
-    backgroundColor: '#007bff', // Example color
+    backgroundColor: '#007bff',
     padding: 15,
     borderRadius: 5,
     marginTop: 20,
