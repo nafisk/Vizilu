@@ -1,17 +1,22 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { StripeProvider } from '@stripe/stripe-react-native';
+import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import BottomTabNavigator from './components/BottomTabNavigatgor';
-import { STRIPE_PUBLISHABLE_KEY } from './utils/constants';
+import BottomTabNavigator from './components/BottomTabNavigatgor'; // Your home page component
+import LoginPage from './pages/AuthScreen/LoginPage';
+import SignupPage from './pages/AuthScreen/SignupPage';
 
-export default function App() {
+const Stack = createStackNavigator();
+
+const App = () => {
   return (
-    <>
-      <StripeProvider publishableKey={STRIPE_PUBLISHABLE_KEY}>
-        <NavigationContainer>
-          <BottomTabNavigator />
-        </NavigationContainer>
-      </StripeProvider>
-    </>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName='Signup'>
+        <Stack.Screen name='Signup' component={SignupPage} />
+        <Stack.Screen name='Login' component={LoginPage} />
+        <Stack.Screen name='Home' component={BottomTabNavigator} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
+
+export default App;
