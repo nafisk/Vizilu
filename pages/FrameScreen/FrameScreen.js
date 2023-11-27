@@ -2,24 +2,36 @@ import { Ionicons } from '@expo/vector-icons';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { Accelerometer } from 'expo-sensors';
 import { throttle } from 'lodash';
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect, useState, useLayoutEffect } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import Frame1080p from '../../assets/Frame1080p';
 import Frame480p from '../../assets/Frame480p';
 import Frame720p from '../../assets/Frame720p';
 import styles from './FrameScreenStyles';
+import logo from '../../assets/app/logo.webp';
 
 const UPDATE_IN_MS = 10;
 const THROTTLE_INTERVAL = 5;
 
-const FrameScreen = memo(() => {
+const FrameScreen = memo(({ navigation }) => {
   const [selectedResolution, setSelectedResolution] = useState('480p');
   const [currentFrame, setCurrentFrame] = useState(null);
   const [orientation, setOrientation] = useState(
     ScreenOrientation.Orientation.PORTRAIT_UP
   );
   const isPortrait = orientation === ScreenOrientation.Orientation.PORTRAIT_UP;
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: () => (
+        <View style={styles.headerContainer}>
+          <Image source={logo} style={styles.logo} resizeMode='contain' />
+          <Text style={styles.headerTitle}>Vizilu Experience</Text>
+        </View>
+      ),
+    });
+  }, [navigation]);
 
   useEffect(() => {
     Accelerometer.setUpdateInterval(UPDATE_IN_MS);

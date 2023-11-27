@@ -1,18 +1,19 @@
-import {
-  CognitoUserAttribute,
-  CognitoUserPool,
-} from 'amazon-cognito-identity-js';
 import React, { useState } from 'react';
 import {
-  Button,
   StyleSheet,
   TextInput,
   View,
   Alert,
-  Text,
   TouchableOpacity,
+  Text,
+  Image,
 } from 'react-native';
+import {
+  CognitoUserAttribute,
+  CognitoUserPool,
+} from 'amazon-cognito-identity-js';
 import userPoolConfig from '../../cognitoConfig';
+import logo from '../../assets/app/logo_full.png'; // Assuming the logo is the same
 
 const SignupPage = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -46,6 +47,8 @@ const SignupPage = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Image source={logo} style={styles.logo} resizeMode='contain' />
+
       <TextInput
         style={styles.input}
         placeholder='Email'
@@ -77,7 +80,10 @@ const SignupPage = ({ navigation }) => {
         onChangeText={setAddress}
         value={address}
       />
-      <Button title='Sign Up' onPress={handleSignup} />
+      <TouchableOpacity onPress={handleSignup} style={styles.signupButton}>
+        <Text style={styles.signupButtonText}>Sign Up</Text>
+      </TouchableOpacity>
+
       <TouchableOpacity onPress={() => navigation.navigate('LoginPage')}>
         <Text style={styles.linkText}>Already have an account? Log in</Text>
       </TouchableOpacity>
@@ -90,18 +96,40 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 20,
+    backgroundColor: '#ffffff',
+  },
+  logo: {
+    width: 250,
+    alignSelf: 'center',
+    marginBottom: 10,
   },
   input: {
-    height: 40,
-    borderColor: 'gray',
+    height: 50,
+    backgroundColor: '#fff',
     borderWidth: 1,
-    marginBottom: 10,
-    padding: 10,
+    borderColor: '#198eca',
+    marginBottom: 15,
+    paddingHorizontal: 10,
+    borderRadius: 25,
+    color: '#198eca',
+    fontSize: 16,
   },
   linkText: {
     marginTop: 15,
-    color: 'blue',
+    color: '#198eca',
     textAlign: 'center',
+  },
+  signupButton: {
+    height: 50,
+    backgroundColor: '#198eca',
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  signupButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

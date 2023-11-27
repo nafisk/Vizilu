@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
 import {
   StyleSheet,
   Switch,
@@ -6,10 +6,12 @@ import {
   TouchableOpacity,
   View,
   Alert,
+  Image,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CommonActions } from '@react-navigation/native';
 import { CognitoUserPool } from 'amazon-cognito-identity-js'; // Import CognitoUserPool
+import logo from '../../assets/app/logo.webp';
 
 import userPoolConfig from '../../cognitoConfig'; // Assuming this is your Cognito config
 const userPool = new CognitoUserPool(userPoolConfig);
@@ -17,6 +19,17 @@ const userPool = new CognitoUserPool(userPoolConfig);
 const SettingsScreen = ({ navigation }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: () => (
+        <View style={styles.headerContainer}>
+          <Image source={logo} style={styles.logo} resizeMode='contain' />
+          <Text style={styles.headerTitle}>Settings</Text>
+        </View>
+      ),
+    });
+  }, [navigation]);
 
   useEffect(() => {
     checkUserAuthentication();
@@ -148,6 +161,17 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  logo: {
+    width: 40, // Adjust the size as needed
+    marginRight: 10,
+  },
+  headerTitle: {
+    fontSize: 18,
   },
 });
 

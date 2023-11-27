@@ -1,5 +1,5 @@
 import { useStripe } from '@stripe/stripe-react-native';
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import {
   Alert,
   Dimensions,
@@ -12,14 +12,15 @@ import {
   SafeAreaView,
 } from 'react-native';
 import { CognitoUserPool } from 'amazon-cognito-identity-js';
-import userPoolConfig from '../../cognitoConfig'; // Assuming this is your Cognito config
+import userPoolConfig from '../../cognitoConfig';
+import logo from '../../assets/app/logo.webp';
 
 import mockData from '../../mock/product';
 import { PAYMENT_ENDPOINT } from '../../utils/constants';
 
 const { width } = Dimensions.get('window');
 
-const ShopScreen = () => {
+const ShopScreen = ({ navigation }) => {
   const { images, name, description, price, additionalInfo } = mockData;
   const itemDetails = additionalInfo.itemDetails;
 
@@ -27,6 +28,17 @@ const ShopScreen = () => {
   const [loading, setLoading] = useState(false);
   const [paymentIntentClientSecret, setPaymentIntentClientSecret] =
     useState(null);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: () => (
+        <View style={styles.headerContainer}>
+          <Image source={logo} style={styles.logo} resizeMode='contain' />
+          <Text style={styles.headerTitle}>Shop</Text>
+        </View>
+      ),
+    });
+  }, [navigation]);
 
   const fetchPaymentSheetParams = async () => {
     const userInfo = await getCurrentUserInfo(); // Get user info
@@ -248,6 +260,17 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  logo: {
+    width: 40, // Adjust the size as needed
+    marginRight: 10,
+  },
+  headerTitle: {
+    fontSize: 18,
   },
 });
 

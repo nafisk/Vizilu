@@ -6,7 +6,8 @@ import {
   View,
   Alert,
   TouchableOpacity,
-  Text, // Import Text
+  Text,
+  Image,
 } from 'react-native';
 import {
   AuthenticationDetails,
@@ -14,6 +15,7 @@ import {
   CognitoUserPool,
 } from 'amazon-cognito-identity-js';
 import userPoolConfig from '../../cognitoConfig';
+import logo from '../../assets/app/logo_full.png';
 
 const LoginPage = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -54,20 +56,26 @@ const LoginPage = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Image source={logo} style={styles.logo} resizeMode='contain' />
       <TextInput
         style={styles.input}
         placeholder='Email'
+        placeholderTextColor='#a1d4e9'
         onChangeText={setEmail}
         value={email}
       />
       <TextInput
         style={styles.input}
         placeholder='Password'
+        placeholderTextColor='#a1d4e9'
         onChangeText={setPassword}
         value={password}
         secureTextEntry
       />
-      <Button title='Login' onPress={handleLogin} />
+      <TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
+        <Text style={styles.loginButtonText}>Login</Text>
+      </TouchableOpacity>
+
       {/* Add TouchableOpacity for navigating to SignupPage */}
       <TouchableOpacity onPress={() => navigation.navigate('SignupPage')}>
         <Text style={styles.linkText}>Don't have an account? Sign up</Text>
@@ -86,18 +94,41 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 20,
+    backgroundColor: '#ffffff', // Optional: change background color if needed
+  },
+  logo: {
+    width: 250,
+    alignSelf: 'center',
+    marginBottom: 10,
   },
   input: {
-    height: 40,
-    borderColor: 'gray',
+    height: 50,
+    backgroundColor: '#fff', // Background color for input
     borderWidth: 1,
-    marginBottom: 10,
-    padding: 10,
+    borderColor: '#198eca',
+    marginBottom: 15,
+    paddingHorizontal: 10,
+    borderRadius: 25, // Rounded corners for modern look
+    color: '#198eca', // Text color
+    fontSize: 16, // Adjust font size if needed
   },
   linkText: {
     marginTop: 15,
-    color: 'blue',
+    color: '#198eca', // Link text color
     textAlign: 'center',
+  },
+  loginButton: {
+    height: 50,
+    backgroundColor: '#198eca', // Button background color
+    borderRadius: 25, // Rounded corners
+    justifyContent: 'center', // Center content vertically
+    alignItems: 'center', // Center content horizontally
+  },
+
+  loginButtonText: {
+    color: '#fff', // Text color
+    fontSize: 16, // Text size
+    fontWeight: 'bold', // Text weight
   },
 });
 

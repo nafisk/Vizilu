@@ -104,6 +104,17 @@ const styles = StyleSheet.create({
       paddingRight: 30, // to ensure the text is never behind the icon
     },
   },
+  headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  logo: {
+    width: 40, // Adjust the size as needed
+    marginRight: 10,
+  },
+  headerTitle: {
+    fontSize: 18,
+  },
 });
 
 export default styles;
