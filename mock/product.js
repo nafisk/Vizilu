@@ -35,14 +35,13 @@ const mockData = {
     returnsExchanges: 'Returns & exchanges accepted',
     paymentOptions: 'Pay in 4 installments of $24.98. Klarna. Learn more',
     itemDetails: {
-      handmade: true,
       dimensions: {
         width: 18,
         height: 12,
         depth: 3,
       },
       description:
-        'Dive into a world of visual enchantment with our Vizilu 3D Visual Illusion Picture Frame (12"x18"). Elevate your space with mesmerizing 3D photo displays, where memories come to life. Simply upload, warp, print, and install for a captivating experience. As you move, your photos appear to rotate within the frame, creating an enchanting and dynamic visual narrative. This premium matte black gallery edition is a perfect blend of technology and artistry. Transform your cherished moments into captivating masterpieces! Order now and infuse your space with the magic of Vizilu!',
+        'Dive into a world of visual enchantment with our Vizilu 3D Visual Illusion Picture Frame (12"x18"). Elevate your space with mesmerizing 3D photo displays, where memories come to life. ',
       keyFeatures: [
         'Immersive 3D Experience: Your pictures appear to hang on the walls of a photo gallery, rotating and tracking your every move.',
         'Effortless Photo Upload: Use the Vizilu app for seamless photo selection and warping.',

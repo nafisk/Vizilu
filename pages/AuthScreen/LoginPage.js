@@ -45,6 +45,13 @@ const LoginPage = ({ navigation }) => {
     });
   };
 
+  const handleContinueWithoutLogin = () => {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'BottomTabNavigator' }],
+    });
+  };
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -64,6 +71,11 @@ const LoginPage = ({ navigation }) => {
       {/* Add TouchableOpacity for navigating to SignupPage */}
       <TouchableOpacity onPress={() => navigation.navigate('SignupPage')}>
         <Text style={styles.linkText}>Don't have an account? Sign up</Text>
+      </TouchableOpacity>
+
+      {/* Continue Without Logging In */}
+      <TouchableOpacity onPress={handleContinueWithoutLogin}>
+        <Text style={styles.linkText}>Continue without logging in</Text>
       </TouchableOpacity>
     </View>
   );
