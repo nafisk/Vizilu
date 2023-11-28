@@ -1,39 +1,62 @@
-# vizilu-final
+# Vizilu App - React Native Repository
 
-# Presentation Time: NOVEMBER 28th
+## Overview
 
-# Look into Test Flight
+Welcome to the Vizilu App repository! This React Native project is dedicated to revolutionizing the way we interact with digital photographs and art. Developed by Nafis Khan, the Vizilu App is a unique blend of technology and art, designed to provide an immersive and interactive experience for viewing personal photos and digital art.
 
-# low and high res image
+## Features
 
-# have settings for image size, frame count and image frame change sensitivity
+- **High-Resolution Viewing Options**: Users can view photos in 480p, 720p, and 1080p resolutions, catering to different preferences and device capabilities.
+- **E-Commerce Integration**: Seamless in-app purchasing experience for users to buy the Vizilu 3D Picture Frame.
+- **Secure Checkout**: Ensures a safe and reliable transaction process, with options like Klarna for installment payments.
+- **Interactive Display**: Tilt-responsive interface that mimics the immersive experience of the physical Vizilu frame.
 
-When displaying a lot of images quickly in a React Native application, the primary considerations should be efficient loading, rendering performance, and memory usage. Here's a guide to help you choose the best approach:
+## Technology Stack
 
-Image Format:
+| Technology          | Description                                       |
+|---------------------|---------------------------------------------------|
+| React Native        | For building the mobile app's user interface.     |
+| Amazon Cognito      | For secure user authentication and management.    |
+| Expo Sensors        | Utilizing the accelerometer for tilt detection.   |
+| React Navigation    | For smooth navigation and screen transitions.     |
+| AWS Elastic Beanstalk | For Node.js backend deployment and management.  |
+| Stripe              | Integrated for secure payment processing.         |
+| GitHub              | For version control and collaborative development.|
+| Notion              | For project management and tracking progress.     |
 
-JPEG: Ideal for photographic images where fine detail is less critical. Its smaller file size can lead to faster loading times.
-PNG: Use for images with transparency or sharp lines (like icons or logos). It's larger in size compared to JPEG but essential for certain types of images.
-WebP: This modern format offers superior compression and quality characteristics compared to JPEG and PNG. It's supported in React Native and is a great choice for balancing quality and performance.
-Image Optimization:
+## Installation
 
-Resize Images: Serve images that are appropriately sized for the user's device. Avoid downloading large images only to display them in a small size.
-Compression: Use tools or services to optimize images. This reduces file size without significantly compromising quality.
-Efficient Loading:
+To get started with the Vizilu App:
 
-Lazy Loading: Load images as they are about to appear on the screen. React Native libraries like react-native-lazy-load-image can be useful.
-Caching: Use image caching to store already-loaded images. This prevents re-downloading of images that the user has already seen.
-Performance Techniques:
+1. Clone the repository:
+```git clone https://github.com/nafisk/vizilu-final```
 
-Use FlatList or VirtualizedList: For rendering long lists of images, these components only render elements that are currently visible, improving performance.
-Avoid Unnecessary Re-renders: Optimize your components to prevent unnecessary re-renders, which can slow down your app.
-Image Preloading: Preload images that the user is likely to view next. This can make navigation between images feel more responsive.
-Coding Practices:
+2. Install dependencies:
+```npm install```
 
-Use FastImage: This is a React Native module that is more performant than the standard Image component. It supports caching and other features beneficial for image-heavy apps.
-Background Loading: Load images in the background if possible, especially for images that are not immediately visible on the app launch.
-Testing and Monitoring:
+3. Start the application with Expo:
+```npx expo start```
 
-Regularly test the performance of your app, especially on different devices and network conditions.
-Use tools to monitor the app's memory usage and loading times.
-In summary, a combination of using efficient image formats (consider WebP for its balance of quality and size), optimizing image sizes and compression, implementing smart loading techniques (like lazy loading and caching), and following good React Native coding practices will help achieve the goal of displaying a lot of images quickly and efficiently.
+5. Start the application:
+
+
+
+## Usage
+
+After installation, you can run the app on your local device or emulator. Explore the various features like viewing photos in different resolutions, interacting with the tilt-responsive display, and experiencing the seamless e-commerce integration.
+
+## Contributing
+
+Contributions to the Vizilu App are welcome! Please read our contributing guidelines before submitting your pull request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+For any queries or suggestions, feel free to reach out to Nafis Khan at nafisrizwank@gmail.com or visit [www.nafisK.com](http://www.nafisk.com).
+
+## Acknowledgments
+
+Special thanks to all contributors and supporters who have made this project possible.
