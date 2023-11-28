@@ -1,4 +1,4 @@
-# Vizilu App - React Native Repository
+# Vizilu App - Built with React Native
 
 ## Overview
 
