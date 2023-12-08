@@ -66,12 +66,8 @@ Contributions are welcome! Please read our contributing guidelines before submit
 
 ## License
 
-Licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Licensed under the MIT License - see the [LICENSE](https://opensource.org/license/mit/) file for details.
 
 ## Contact
 
 Reach out to Nafis Khan at nafisrizwank@gmail.com or visit [www.nafisK.com](http://www.nafisk.com).
-
-## Acknowledgments
-
-Special thanks to all contributors and supporters.
