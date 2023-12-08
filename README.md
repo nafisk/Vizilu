@@ -2,61 +2,76 @@
 
 ## Overview
 
-Welcome to the Vizilu App repository! This React Native project is dedicated to revolutionizing the way we interact with digital photographs and art. Developed by Nafis Khan, the Vizilu App is a unique blend of technology and art, designed to provide an immersive and interactive experience for viewing personal photos and digital art.
+Vizilu App, developed by Nafis Khan, is a React Native project that redefines the interaction with digital photographs and art. It combines technology and artistry to deliver an immersive and interactive digital photo and art viewing experience.
 
 ## Features
 
-- **High-Resolution Viewing Options**: Users can view photos in 480p, 720p, and 1080p resolutions, catering to different preferences and device capabilities.
-- **E-Commerce Integration**: Seamless in-app purchasing experience for users to buy the Vizilu 3D Picture Frame.
-- **Secure Checkout**: Ensures a safe and reliable transaction process, with options like Klarna for installment payments.
-- **Interactive Display**: Tilt-responsive interface that mimics the immersive experience of the physical Vizilu frame.
+- **High-Resolution Viewing Options**: View photos in 480p, 720p, and 1080p.
+- **E-Commerce Integration**: In-app purchasing of the Vizilu 3D Picture Frame.
+- **Secure Checkout**: Safe transactions with options like Klarna.
+- **Interactive Display**: Tilt-responsive interface for an immersive experience.
 
 ## Technology Stack
 
-| Technology          | Description                                       |
-|---------------------|---------------------------------------------------|
-| React Native        | For building the mobile app's user interface.     |
-| Amazon Cognito      | For secure user authentication and management.    |
-| Expo Sensors        | Utilizing the accelerometer for tilt detection.   |
-| React Navigation    | For smooth navigation and screen transitions.     |
-| AWS Elastic Beanstalk | For Node.js backend deployment and management.  |
-| Stripe              | Integrated for secure payment processing.         |
-| GitHub              | For version control and collaborative development.|
-| Notion              | For project management and tracking progress.     |
+| Technology            | Description                                      |
+|-----------------------|--------------------------------------------------|
+| React Native          | Mobile app UI development                        |
+| Amazon Cognito        | User authentication and management               |
+| Expo Sensors          | Accelerometer for tilt detection                 |
+| React Navigation      | Smooth navigation and screen transitions         |
+| AWS Elastic Beanstalk | Node.js backend deployment and management        |
+| Stripe                | Secure payment processing                        |
+| GitHub                | Version control and collaboration                 |
+| Notion                | Project management                               |
 
-## Installation
+## Prerequisites for Running a React Native App
 
-To get started with the Vizilu App:
+To run the Vizilu App, ensure you have the following installed:
 
-1. Clone the repository:
-```git clone https://github.com/nafisk/vizilu-final```
+- **Node.js**: [Download Node.js](https://nodejs.org/)
+- **Watchman**: For macOS users, install using `brew install watchman`.
+- **React Native CLI**: Install using `npm install -g react-native-cli`.
+- **Expo CLI**: Install using `npm install -g expo-cli`.
+- **Vizilu Backend**: Host `https://github.com/nafisk/Vizilu-Backend` and update the backend URL to this project
 
-2. Install dependencies:
-```npm install```
+## Installation and Setup
 
-3. Start the application with Expo:
-```npx expo start```
+1. Clone the Vizilu App repository:
+   ```bash
+   git clone https://github.com/nafisk/Vizilu
+   ```
 
-5. Start the application:
+2. Navigate to the project directory:
+   ```bash
+   cd vizilu-final
+   ```
 
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
 
+4. Start the application with Expo:
+   ```bash
+   npx expo start
+   ```
 
 ## Usage
 
-After installation, you can run the app on your local device or emulator. Explore the various features like viewing photos in different resolutions, interacting with the tilt-responsive display, and experiencing the seamless e-commerce integration.
+Run the app on your device or emulator to explore features like viewing photos in different resolutions, the tilt-responsive display, and seamless e-commerce integration.
 
 ## Contributing
 
-Contributions to the Vizilu App are welcome! Please read our contributing guidelines before submitting your pull request.
+Contributions are welcome! Please read our contributing guidelines before submitting your pull request.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Contact
 
-For any queries or suggestions, feel free to reach out to Nafis Khan at nafisrizwank@gmail.com or visit [www.nafisK.com](http://www.nafisk.com).
+Reach out to Nafis Khan at nafisrizwank@gmail.com or visit [www.nafisK.com](http://www.nafisk.com).
 
 ## Acknowledgments
 
-Special thanks to all contributors and supporters who have made this project possible.
+Special thanks to all contributors and supporters.
