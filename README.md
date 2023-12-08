@@ -62,11 +62,7 @@ Run the app on your device or emulator to explore features like viewing photos i
 
 ## Contributing
 
-Contributions are welcome! Please read our contributing guidelines before submitting your pull request.
-
-## License
-
-Licensed under the MIT License - see the [LICENSE](https://opensource.org/license/mit/) file for details.
+Contributions are welcome! Feel free to submit a Pull Request.
 
 ## Contact
 
